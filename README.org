@@ -1,28 +1,30 @@
 #+title: nix-extract-flake-programs
 #+author: Aqeel Akber <aqeel@aqeelakber.com>
-#+lastmod: [2024-11-19 Tue 16:11]
+#+lastmod: [2024-11-19 Tue 16:47]
 
 * nix-extract-flake-programs 💅✨💻
 
-`nix-extract-flake-programs` makes it simple to generate a list of installed packages—complete with versions—from your Nix flake configurations. Whether you’re documenting your current setup or comparing multiple configurations, this script quickly produces a clean, shareable Org-mode table.
+=nix-extract-flake-programs= makes it simple to generate a list of installed packages—complete with versions—from your Nix flake configurations. Whether you’re documenting your current setup, comparing multiple configurations, or preparing for a migration, this script quickly produces clean, shareable output.
 
-Perfect for NixOS users who want clarity, organisation, and a little extra polish in their documentation.
+Perfect for NixOS users who value clarity, organisation, and polished documentation.
 
 ---
 
 * tl;dr 🌸
-- Extracts system and Home Manager packages from Nix flakes.
-- Outputs an Org-mode table that’s ready for documentation or comparison.
+- Extracts package lists from =nixosConfigurations= and Home Manager.
 - Works with any flake configuration, not just the installed one.
+- Outputs an Org-mode table for documentation or comparison.
+- Now runnable directly with Nix flakes!
 
 ---
 
 * Features 💕
-- *System Packages*: Extracts packages from `nixosConfigurations.environment.systemPackages`.
-- *Home Manager Packages*: Includes `home.packages` if Home Manager is configured.
+- *System Packages*: Extracts from =nixosConfigurations.environment.systemPackages=.
+- *Home Manager Packages*: Includes =home.packages= if configured.
 - *Multi-config Support*: Query and compare any flake, not just your installed system.
-- *Org-mode Ready*: Produces tables that are structured and easy to share.
-- *Customisable*: Specify flake paths or hostnames for flexible use.
+- *Org-mode Ready*: Produces structured tables for seamless documentation.
+- *Flake-ready*: Use directly from the repository with =nix run=.
+- *Customisable*: Specify flake paths and hostnames for flexible use.
 
 ---
 
@@ -30,22 +32,22 @@ Perfect for NixOS users who want clarity, organisation, and a little extra polis
 This script requires the Nix package manager or NixOS to run. You can install Nix on most Linux distributions and macOS by following the instructions at [[https://nixos.org/download][nixos.org/download]].
 
 ** Required tools:
-- `nix` (the Nix package manager)
-- `jq` (JSON parsing utility)
-- `emacs` (for table formatting in Org-mode)
+- =nix= (the Nix package manager)
+- =jq= (JSON parsing utility)
+- =emacs= (Used for Org-mode table formatting)
 
 ** Dependency Management:
-The script includes a `nix-shell` shebang at the top, which ensures all required dependencies are installed in an isolated environment before execution. You don’t need to install anything manually; the shebang takes care of fetching:
-- `nix`
-- `jq`
-- `emacs`
+The script uses a =nix-shell= shebang, ensuring all dependencies are installed in an isolated environment. No manual installation is required; the shebang fetches:
+- =nix=
+- =jq=
+- =emacs=
 
 This makes the script self-contained and easy to run on any system with Nix installed.
 
 ---
 
 * Installation 💻
-To build the script, run:
+The script can now be used directly with Nix flakes. To build locally:
 
 #+BEGIN_SRC bash
 nix-build -o result default.nix
@@ -57,35 +59,40 @@ The script will be available at =result/bin/nix-extract-flake-programs=.
 
 * Usage 🎀
 
-Use this script to extract package lists from any flake configuration. Here’s how:
+Run the script directly using flakes or from a local build. Here’s how:
 
+** With Flakes
+Run directly from the repository:
+#+BEGIN_SRC bash
+nix run github:admiralakber/nix-extract-flake-programs -- --help
+#+END_SRC
+
+** Local Build
+Run from a locally built binary:
 #+BEGIN_SRC bash
 ./result/bin/nix-extract-flake-programs --help
 #+END_SRC
 
 ** Examples
 Print the package table to stdout:
-
 #+BEGIN_SRC bash
-./result/bin/nix-extract-flake-programs --stdout
+nix run github:admiralakber/nix-extract-flake-programs -- --stdout
 #+END_SRC
 
 Save the table to a file for documentation or sharing:
-
 #+BEGIN_SRC bash
-./result/bin/nix-extract-flake-programs --output packages.org
+nix run github:admiralakber/nix-extract-flake-programs -- --output packages.org
 #+END_SRC
 
 Query a specific flake and hostname to compare configurations:
-
 #+BEGIN_SRC bash
-./result/bin/nix-extract-flake-programs --flake /path/to/flake --hostname my-hostname
+nix run github:admiralakber/nix-extract-flake-programs -- --flake /path/to/flake --hostname my-hostname
 #+END_SRC
 
 ---
 
 * Example Output 💖
-Here’s what the output looks like:
+Here’s what you get—useful, structured, and ready to document:
 
 #+BEGIN_EXAMPLE
 | Package Name             | Version    |
@@ -105,7 +112,7 @@ Here’s what the output looks like:
 I created this script to make it easy to see what’s in my system and quickly produce clean documentation for my Nix configurations. It’s great for auditing, comparing, or just keeping track of your setup. Curious about my setup? Check out my config here: [[https://github.com/admiralakber/nix-config][admiralakber/nix-config]].
 
 *** Does it work outside of NixOS?
-No, this is a NixOS-specific tool, and there’s no intention of expanding beyond that. If you’re not using NixOS, I highly recommend giving it a try. After 20+ years as a Linux daily driver, I can confidently say NixOS is what I’ve always wanted for my system. If you’re new, my config and [[https://github.com/ryan4yin/nix-config][ryan4yin’s documentation on flakes]] are great starting points.
+No, this is a NixOS-specific tool, and there’s no intention of expanding beyond that. If you’re not using NixOS, I highly recommend giving it a try. After 20+ years as a Linux daily driver, I can confidently say NixOS is what I’ve always wanted for my system. If you’re new, [[https://github.com/admiralakber/nix-config][my config]] and [[https://github.com/ryan4yin/nix-config][ryan4yin’s config & documentation on flakes]] are great starting points.
 
 *** What’s Org-mode?
 It’s a plain-text markup format for organising and documenting information, commonly used in Emacs. Even if you don’t use Emacs, the tables work perfectly as structured plain text.
@@ -125,7 +132,7 @@ Have feedback, ideas, or just want to collaborate? Open an issue or send a pull 
 ---
 
 * Closing Thoughts ✨
-This script isn’t fancy—it’s straightforward and useful. If it helps you document and compare your Nix setups, then it’s doing its job.
+This script isn’t fancy—it’s practical and gets the job done. If it helps you document and compare your Nix setups, then it’s doing its job.
 
 ---
 
