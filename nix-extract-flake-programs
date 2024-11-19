@@ -155,16 +155,24 @@ fi
 
 ) > "$OUTPUT_FILE"
 
+# Sort and process output using Emacs
+SORT_COLUMN=1  # You can change this to specify which column to sort by (1 for package name, 2 for version)
+emacs --quick --batch "$OUTPUT_FILE" \
+    --eval "(progn
+              (setq make-backup-files nil)
+              (org-mode)
+              (org-table-align)
+              (goto-char (point-min))
+              (forward-line 2) ;; Move to the start of the table data (skipping header rows)
+              (org-table-sort-lines nil ?a) ;; Sort alphabetically by the first column
+              (save-buffer))"
+
 # Handle output based on options
 if [[ $PRINT_TO_STDOUT -eq 1 ]]; then
     # Process table in Emacs and output to stdout
     emacs --quick --batch "$OUTPUT_FILE" \
         --eval "(progn (setq make-backup-files nil) (org-mode) (org-table-align) (princ (buffer-string)))"
 else
-    # Open the Org table in Emacs in command-line mode
-    emacs --quick --batch "$OUTPUT_FILE" \
-        --eval "(progn (setq make-backup-files nil) (org-mode) (org-table-align) (save-buffer))"
-
     # Inform the user where the file is saved
     echo "Org table processed and saved at: $OUTPUT_FILE"
 fi
