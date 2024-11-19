@@ -1,6 +1,16 @@
-#+title: nix-extract-flake-programs
+#+title: List programs/packages to be installed given a NixOS flake configuration
 #+author: Aqeel Akber <aqeel@aqeelakber.com>
-#+lastmod: [2024-11-19 Tue 22:53]
+#+lastmod: [2024-11-19 Tue 23:28]
+
+[[https://img.shields.io/github/tag/admiralakber/nix-extract-flake-programs?color=%23ffb7c5&style=for-the-badge]]
+[[https://img.shields.io/badge/License-MIT-%23ff69b4?style=for-the-badge]]
+[[https://img.shields.io/github/stars/admiralakber/nix-extract-flake-programs?style=for-the-badge&color=%23ffc0cb]]
+[[https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge][https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge]]
+
+---
+
+*nix-extract-flake-programs* is a tool to document and compare packages in Nix flakes. Simplify and organise your Nix configurations with ease!
+
 
 * nix-extract-flake-programs 💅✨💻
 
