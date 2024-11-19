@@ -1,40 +1,20 @@
 #+title: List programs/packages to be installed given a NixOS flake configuration
 #+author: Aqeel Akber <aqeel@aqeelakber.com>
-#+lastmod: [2024-11-20 Wed 00:09]
+#+lastmod: [2024-11-20 Wed 00:15]
 
 #+BEGIN_HTML
-<div style="display: flex; justify-content: center; align-items: center; text-align: center;">
-  <a href="https://img.shields.io/github/tag/admiralakber/nix-extract-flake-programs?color=%23ffb7c5&style=for-the-badge"
-     style="text-decoration: none;">
-    <img src="https://img.shields.io/github/tag/admiralakber/nix-extract-flake-programs?color=%23ffb7c5&style=for-the-badge"
-         alt="Latest Tag"
-         style="transition: transform 0.3s ease, box-shadow 0.3s ease;"
-         onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0px 4px 15px rgba(0, 0, 0, 0.2)';"
-         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+<div>
+  <a href="https://img.shields.io/github/tag/admiralakber/nix-extract-flake-programs?color=%23ffb7c5&style=for-the-badge">
+    <img src="https://img.shields.io/github/tag/admiralakber/nix-extract-flake-programs?color=%23ffb7c5&style=for-the-badge" alt="Latest Tag">
   </a>
-  <a href="https://img.shields.io/badge/License-MIT-%23ff69b4?style=for-the-badge"
-     style="text-decoration: none;">
-    <img src="https://img.shields.io/badge/License-MIT-%23ff69b4?style=for-the-badge"
-         alt="License: MIT"
-         style="transition: transform 0.3s ease, box-shadow 0.3s ease;"
-         onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0px 4px 15px rgba(0, 0, 0, 0.2)';"
-         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+  <a href="https://img.shields.io/badge/License-MIT-%23ff69b4?style=for-the-badge">
+    <img src="https://img.shields.io/badge/License-MIT-%23ff69b4?style=for-the-badge" alt="License: MIT">
   </a>
-  <a href="https://img.shields.io/github/stars/admiralakber/nix-extract-flake-programs?style=for-the-badge&color=%23ffc0cb"
-     style="text-decoration: none;">
-    <img src="https://img.shields.io/github/stars/admiralakber/nix-extract-flake-programs?style=for-the-badge&color=%23ffc0cb"
-         alt="GitHub Stars"
-         style="transition: transform 0.3s ease, box-shadow 0.3s ease;"
-         onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0px 4px 15px rgba(0, 0, 0, 0.2)';"
-         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+  <a href="https://img.shields.io/github/stars/admiralakber/nix-extract-flake-programs?style=for-the-badge&color=%23ffc0cb">
+    <img src="https://img.shields.io/github/stars/admiralakber/nix-extract-flake-programs?style=for-the-badge&color=%23ffc0cb" alt="GitHub Stars">
   </a>
-  <a href="https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge"
-     style="text-decoration: none;">
-    <img src="https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge"
-         alt="Flake Ready"
-         style="transition: transform 0.3s ease, box-shadow 0.3s ease;"
-         onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0px 4px 15px rgba(0, 0, 0, 0.2)';"
-         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+  <a href="https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge">
+    <img src="https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge" alt="Flake Ready">
   </a>
 </div>
 #+END_HTML
@@ -84,12 +64,14 @@ This script requires the Nix package manager or NixOS to run. You can install Ni
 - =nix= (the Nix package manager)
 - =jq= (JSON parsing utility)
 - =emacs= (Used for Org-mode table formatting)
+- =git= (Direct pulling of remote repositories)
 
 ** Dependency Management:
 The script uses a =nix-shell= shebang, ensuring all dependencies are installed in an isolated environment. No manual installation is required; the shebang fetches:
 - =nix=
 - =jq=
 - =emacs=
+- =git=
 
 This makes the script self-contained and easy to run on any system with Nix installed.
 
