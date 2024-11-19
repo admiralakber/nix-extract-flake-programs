@@ -1,11 +1,12 @@
 #+title: List programs/packages to be installed given a NixOS flake configuration
 #+author: Aqeel Akber <aqeel@aqeelakber.com>
-#+lastmod: [2024-11-19 Tue 23:28]
+#+lastmod: [2024-11-19 Tue 23:31]
 
-[[https://img.shields.io/github/tag/admiralakber/nix-extract-flake-programs?color=%23ffb7c5&style=for-the-badge]]
-[[https://img.shields.io/badge/License-MIT-%23ff69b4?style=for-the-badge]]
-[[https://img.shields.io/github/stars/admiralakber/nix-extract-flake-programs?style=for-the-badge&color=%23ffc0cb]]
-[[https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge][https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge]]
+[[https://img.shields.io/github/tag/admiralakber/nix-extract-flake-programs?color=%23ffb7c5&style=for-the-badge][file:https://img.shields.io/github/tag/admiralakber/nix-extract-flake-programs?color=%23ffb7c5&style=for-the-badge]]
+[[https://img.shields.io/badge/License-MIT-%23ff69b4?style=for-the-badge][file:https://img.shields.io/badge/License-MIT-%23ff69b4?style=for-the-badge]]
+[[https://img.shields.io/github/stars/admiralakber/nix-extract-flake-programs?style=for-the-badge&color=%23ffc0cb][file:https://img.shields.io/github/stars/admiralakber/nix-extract-flake-programs?style=for-the-badge&color=%23ffc0cb]]
+[[https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge][file:https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge]]
+
 
 ---
 
