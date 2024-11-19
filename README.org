@@ -1,6 +1,6 @@
 #+title: nix-extract-flake-programs
 #+author: Aqeel Akber <aqeel@aqeelakber.com>
-#+lastmod: [2024-11-19 Tue 16:00]
+#+lastmod: [2024-11-19 Tue 16:11]
 
 * nix-extract-flake-programs 💅✨💻
 
@@ -18,11 +18,11 @@ Perfect for NixOS users who want clarity, organisation, and a little extra polis
 ---
 
 * Features 💕
-- **System Packages**: Extracts packages from `nixosConfigurations.environment.systemPackages`.
-- **Home Manager Packages**: Includes `home.packages` if Home Manager is configured.
-- **Multi-config Support**: Query and compare any flake, not just your installed system.
-- **Org-mode Ready**: Produces tables that are structured and easy to share.
-- **Customisable**: Specify flake paths or hostnames for flexible use.
+- *System Packages*: Extracts packages from `nixosConfigurations.environment.systemPackages`.
+- *Home Manager Packages*: Includes `home.packages` if Home Manager is configured.
+- *Multi-config Support*: Query and compare any flake, not just your installed system.
+- *Org-mode Ready*: Produces tables that are structured and easy to share.
+- *Customisable*: Specify flake paths or hostnames for flexible use.
 
 ---
 
