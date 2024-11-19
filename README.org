@@ -1,39 +1,40 @@
 #+title: List programs/packages to be installed given a NixOS flake configuration
 #+author: Aqeel Akber <aqeel@aqeelakber.com>
-#+lastmod: [2024-11-20 Wed 00:05]
+#+lastmod: [2024-11-20 Wed 00:07]
 
 #+BEGIN_HTML
-<style>
-  .badge-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
-  }
-
-  .badge-container a img {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .badge-container a:hover img {
-    transform: scale(1.1); /* Zoom effect */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Add a soft glow */
-  }
-</style>
-
-<div class="badge-container">
-  <a href="https://img.shields.io/github/tag/admiralakber/nix-extract-flake-programs?color=%23ffb7c5&style=for-the-badge" style="text-decoration: none;">
-    <img src="https://img.shields.io/github/tag/admiralakber/nix-extract-flake-programs?color=%23ffb7c5&style=for-the-badge" alt="Latest Tag" style="margin: 5px;">
+<div style="display: flex; justify-content: center; align-items: center; gap: 10px; text-align: center;">
+  <a href="https://img.shields.io/github/tag/admiralakber/nix-extract-flake-programs?color=%23ffb7c5&style=for-the-badge"
+     style="text-decoration: none;">
+    <img src="https://img.shields.io/github/tag/admiralakber/nix-extract-flake-programs?color=%23ffb7c5&style=for-the-badge"
+         alt="Latest Tag"
+         style="margin: 5px; transition: transform 0.3s ease, box-shadow 0.3s ease;"
+         onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0px 4px 15px rgba(0, 0, 0, 0.2)';"
+         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
   </a>
-  <a href="https://img.shields.io/badge/License-MIT-%23ff69b4?style=for-the-badge" style="text-decoration: none;">
-    <img src="https://img.shields.io/badge/License-MIT-%23ff69b4?style=for-the-badge" alt="License: MIT" style="margin: 5px;">
+  <a href="https://img.shields.io/badge/License-MIT-%23ff69b4?style=for-the-badge"
+     style="text-decoration: none;">
+    <img src="https://img.shields.io/badge/License-MIT-%23ff69b4?style=for-the-badge"
+         alt="License: MIT"
+         style="margin: 5px; transition: transform 0.3s ease, box-shadow 0.3s ease;"
+         onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0px 4px 15px rgba(0, 0, 0, 0.2)';"
+         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
   </a>
-  <a href="https://img.shields.io/github/stars/admiralakber/nix-extract-flake-programs?style=for-the-badge&color=%23ffc0cb" style="text-decoration: none;">
-    <img src="https://img.shields.io/github/stars/admiralakber/nix-extract-flake-programs?style=for-the-badge&color=%23ffc0cb" alt="GitHub Stars" style="margin: 5px;">
+  <a href="https://img.shields.io/github/stars/admiralakber/nix-extract-flake-programs?style=for-the-badge&color=%23ffc0cb"
+     style="text-decoration: none;">
+    <img src="https://img.shields.io/github/stars/admiralakber/nix-extract-flake-programs?style=for-the-badge&color=%23ffc0cb"
+         alt="GitHub Stars"
+         style="margin: 5px; transition: transform 0.3s ease, box-shadow 0.3s ease;"
+         onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0px 4px 15px rgba(0, 0, 0, 0.2)';"
+         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
   </a>
-  <a href="https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge" style="text-decoration: none;">
-    <img src="https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge" alt="Flake Ready" style="margin: 5px;">
+  <a href="https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge"
+     style="text-decoration: none;">
+    <img src="https://img.shields.io/badge/Flake-Ready-87CEEB?style=for-the-badge"
+         alt="Flake Ready"
+         style="margin: 5px; transition: transform 0.3s ease, box-shadow 0.3s ease;"
+         onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0px 4px 15px rgba(0, 0, 0, 0.2)';"
+         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
   </a>
 </div>
 #+END_HTML
