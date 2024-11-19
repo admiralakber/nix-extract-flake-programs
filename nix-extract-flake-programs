@@ -1,0 +1,122 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p nix jq emacs
+
+# Default values
+FLAKE_PATH="."
+HOSTNAME="$(hostname)"
+PRINT_TO_STDOUT=0
+OUTPUT_FILE=""
+
+# Help message
+show_help() {
+    cat << EOF
+Usage: $(basename "$0") [OPTIONS]
+
+Extract installed packages from a NixOS flake and format them into an Org-mode table.
+
+Options:
+  -f, --flake PATH          Path to the flake.nix file (default: current directory)
+  -h, --hostname HOSTNAME   Hostname for nixosConfigurations (default: system hostname)
+  -o, --output FILE         Output file path (default: temporary file)
+  --stdout                  Print the Org table to stdout instead of saving to a file
+  --help                    Show this help message and exit
+
+Examples:
+  $(basename "$0") --flake /path/to/flake --hostname my-hostname
+  $(basename "$0") -f . -h my-hostname -o packages.org
+  $(basename "$0") --stdout
+EOF
+}
+
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -f|--flake)
+            FLAKE_PATH="$2"
+            shift 2
+            ;;
+        -h|--hostname)
+            HOSTNAME="$2"
+            shift 2
+            ;;
+        -o|--output)
+            OUTPUT_FILE="$2"
+            shift 2
+            ;;
+        --stdout)
+            PRINT_TO_STDOUT=1
+            shift
+            ;;
+        --help)
+            show_help
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            show_help
+            exit 1
+            ;;
+    esac
+done
+
+# Ensure the flake is accessible
+if [ ! -f "$FLAKE_PATH/flake.nix" ]; then
+    echo "Error: flake.nix not found in $FLAKE_PATH"
+    exit 1
+fi
+
+# Use an associative array to track unique entries
+declare -A seen_packages
+
+# Create a temporary file for the Org table if no output file is specified
+if [[ -z "$OUTPUT_FILE" ]]; then
+    OUTPUT_FILE=$(mktemp /tmp/programs-table.XXXXXX.org)
+fi
+
+# Parse and write the Org table to the temporary file
+(
+    echo "| Package Name             | Version    |"
+    echo "|--------------------------|------------|"
+
+    # Function to process packages
+    process_packages() {
+        while read -r line; do
+            # Extract package name and version, removing hash prefixes
+            if [[ "$line" =~ ([^/]+)-([0-9][^/]+)$ ]]; then
+                package="${BASH_REMATCH[1]}"
+                version="${BASH_REMATCH[2]}"
+                clean_package=$(echo "$package" | sed -E 's/^[a-z0-9]+-//; s/-bin$//')
+
+                # Deduplicate by checking the associative array
+                key="$clean_package:$version"
+                if [[ -z "${seen_packages[$key]}" ]]; then
+                    seen_packages["$key"]=1
+                    printf "| %-24s | %-10s |\n" "$clean_package" "$version"
+                fi
+            fi
+        done
+    }
+
+    # Evaluate system packages
+    nix eval "$FLAKE_PATH#nixosConfigurations.$HOSTNAME.config.environment.systemPackages" --json \
+        | jq -r '.[] | select(type == "string" or type == "object")' | process_packages
+
+    # Evaluate home-manager packages (optional)
+    nix eval "$FLAKE_PATH#homeConfigurations.$HOSTNAME.config.home.packages" --json \
+        | jq -r '.[] | select(type == "string" or type == "object")' | process_packages
+
+) > "$OUTPUT_FILE"
+
+# Handle output based on options
+if [[ $PRINT_TO_STDOUT -eq 1 ]]; then
+    # Process table in Emacs and output to stdout
+    emacs --quick --batch "$OUTPUT_FILE" \
+        --eval "(progn (setq make-backup-files nil) (org-mode) (org-table-align) (princ (buffer-string)))"
+else
+    # Open the Org table in Emacs in command-line mode
+    emacs --quick --batch "$OUTPUT_FILE" \
+        --eval "(progn (setq make-backup-files nil) (org-mode) (org-table-align) (save-buffer))"
+
+    # Inform the user where the file is saved
+    echo "Org table processed and saved at: $OUTPUT_FILE"
+fi

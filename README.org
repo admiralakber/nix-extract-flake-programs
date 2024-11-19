@@ -1,0 +1,140 @@
+#+title: nix-extract-flake-programs
+#+author: Aqeel Akber <aqeel@aqeelakber.com>
+#+lastmod: [2024-11-19 Tue 16:00]
+
+* nix-extract-flake-programs 💅✨💻
+
+`nix-extract-flake-programs` makes it simple to generate a list of installed packages—complete with versions—from your Nix flake configurations. Whether you’re documenting your current setup or comparing multiple configurations, this script quickly produces a clean, shareable Org-mode table.
+
+Perfect for NixOS users who want clarity, organisation, and a little extra polish in their documentation.
+
+---
+
+* tl;dr 🌸
+- Extracts system and Home Manager packages from Nix flakes.
+- Outputs an Org-mode table that’s ready for documentation or comparison.
+- Works with any flake configuration, not just the installed one.
+
+---
+
+* Features 💕
+- **System Packages**: Extracts packages from `nixosConfigurations.environment.systemPackages`.
+- **Home Manager Packages**: Includes `home.packages` if Home Manager is configured.
+- **Multi-config Support**: Query and compare any flake, not just your installed system.
+- **Org-mode Ready**: Produces tables that are structured and easy to share.
+- **Customisable**: Specify flake paths or hostnames for flexible use.
+
+---
+
+* Dependencies 📦
+This script requires the Nix package manager or NixOS to run. You can install Nix on most Linux distributions and macOS by following the instructions at [[https://nixos.org/download][nixos.org/download]].
+
+** Required tools:
+- `nix` (the Nix package manager)
+- `jq` (JSON parsing utility)
+- `emacs` (for table formatting in Org-mode)
+
+** Dependency Management:
+The script includes a `nix-shell` shebang at the top, which ensures all required dependencies are installed in an isolated environment before execution. You don’t need to install anything manually; the shebang takes care of fetching:
+- `nix`
+- `jq`
+- `emacs`
+
+This makes the script self-contained and easy to run on any system with Nix installed.
+
+---
+
+* Installation 💻
+To build the script, run:
+
+#+BEGIN_SRC bash
+nix-build -o result default.nix
+#+END_SRC
+
+The script will be available at =result/bin/nix-extract-flake-programs=.
+
+---
+
+* Usage 🎀
+
+Use this script to extract package lists from any flake configuration. Here’s how:
+
+#+BEGIN_SRC bash
+./result/bin/nix-extract-flake-programs --help
+#+END_SRC
+
+** Examples
+Print the package table to stdout:
+
+#+BEGIN_SRC bash
+./result/bin/nix-extract-flake-programs --stdout
+#+END_SRC
+
+Save the table to a file for documentation or sharing:
+
+#+BEGIN_SRC bash
+./result/bin/nix-extract-flake-programs --output packages.org
+#+END_SRC
+
+Query a specific flake and hostname to compare configurations:
+
+#+BEGIN_SRC bash
+./result/bin/nix-extract-flake-programs --flake /path/to/flake --hostname my-hostname
+#+END_SRC
+
+---
+
+* Example Output 💖
+Here’s what the output looks like:
+
+#+BEGIN_EXAMPLE
+| Package Name             | Version    |
+|--------------------------|------------|
+| git                      | 2.44.1     |
+| vim                      | 9.1.0707   |
+| emacs                    | 29.4       |
+| curl                     | 8.7.1-bin  |
+| sway                     | 1.9        |
+#+END_EXAMPLE
+
+---
+
+* FAQ 🌷
+
+*** Why use this?
+I created this script to make it easy to see what’s in my system and quickly produce clean documentation for my Nix configurations. It’s great for auditing, comparing, or just keeping track of your setup. Curious about my setup? Check out my config here: [[https://github.com/admiralakber/nix-config][admiralakber/nix-config]].
+
+*** Does it work outside of NixOS?
+No, this is a NixOS-specific tool, and there’s no intention of expanding beyond that. If you’re not using NixOS, I highly recommend giving it a try. After 20+ years as a Linux daily driver, I can confidently say NixOS is what I’ve always wanted for my system. If you’re new, my config and [[https://github.com/ryan4yin/nix-config][ryan4yin’s documentation on flakes]] are great starting points.
+
+*** What’s Org-mode?
+It’s a plain-text markup format for organising and documenting information, commonly used in Emacs. Even if you don’t use Emacs, the tables work perfectly as structured plain text.
+
+---
+
+* Future Plans 🌟
+1) Add better handling for multi-host configurations to streamline fleet management.
+2) Improve error handling for more robust output.
+3) Keep it lightweight and focused—no unnecessary features or bloat.
+
+---
+
+* Suggestions 🪩
+Have feedback, ideas, or just want to collaborate? Open an issue or send a pull request. Contributions are always welcome.
+
+---
+
+* Closing Thoughts ✨
+This script isn’t fancy—it’s straightforward and useful. If it helps you document and compare your Nix setups, then it’s doing its job.
+
+---
+
+* Licence
+
+Copyright 2024 Aqeel Akber <aqeel@aqeelakber.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
