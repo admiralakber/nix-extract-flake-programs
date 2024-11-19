@@ -1,12 +1,18 @@
 #+title: nix-extract-flake-programs
 #+author: Aqeel Akber <aqeel@aqeelakber.com>
-#+lastmod: [2024-11-19 Tue 22:26]
+#+lastmod: [2024-11-19 Tue 22:53]
 
 * nix-extract-flake-programs 💅✨💻
 
 =nix-extract-flake-programs= makes it simple to generate a list of installed packages—complete with versions—from your Nix flake configurations. Whether you’re documenting your current setup, comparing multiple configurations, or preparing for a migration, this script quickly produces clean, shareable output.
 
-Perfect for NixOS users who value clarity, organisation, and polished documentation.
+Say goodbye to manual comparisons and hello to structured, reproducible package documentation.
+
+Try it out now:
+#+BEGIN_SRC bash
+nix run github:admiralakber/nix-extract-flake-programs -- -r https://github.com/admiralakber/nix-config -h discipline --stdout
+#+END_SRC
+
 
 ---
 
