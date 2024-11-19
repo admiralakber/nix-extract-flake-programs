@@ -1,6 +1,6 @@
 #+title: nix-extract-flake-programs
 #+author: Aqeel Akber <aqeel@aqeelakber.com>
-#+lastmod: [2024-11-19 Tue 16:47]
+#+lastmod: [2024-11-19 Tue 22:15]
 
 * nix-extract-flake-programs 💅✨💻
 
@@ -15,6 +15,7 @@ Perfect for NixOS users who value clarity, organisation, and polished documentat
 - Works with any flake configuration, not just the installed one.
 - Outputs an Org-mode table for documentation or comparison.
 - Now runnable directly with Nix flakes!
+- Can even take a git repository as an input!
 
 ---
 
@@ -87,6 +88,16 @@ nix run github:admiralakber/nix-extract-flake-programs -- --output packages.org
 Query a specific flake and hostname to compare configurations:
 #+BEGIN_SRC bash
 nix run github:admiralakber/nix-extract-flake-programs -- --flake /path/to/flake --hostname my-hostname
+#+END_SRC
+
+Specify a git repository directly and print to stdout:
+#+BEGIN_SRC bash
+nix run github:admiralakber/nix-extract-flake-programs -- -r https://github.com/admiralakber/nix-config -h discipline --stdout
+#+END_SRC
+
+Specify a branch from a different repo:
+#+BEGIN_SRC
+nix run github:admiralakber/nix-extract-flake-programs -- -r https://github.com/ryan4yin/nix-config -b i3-kickstarter -h nixos-test --stdout
 #+END_SRC
 
 ---

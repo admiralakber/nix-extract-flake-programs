@@ -1,11 +1,14 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p nix jq emacs
+#! nix-shell -i bash -p nix jq emacs git
 
 # Default values
-FLAKE_PATH="."
+FLAKE_PATH=""
 HOSTNAME="$(hostname)"
 PRINT_TO_STDOUT=0
 OUTPUT_FILE=""
+REPO_URL=""
+BRANCH_OR_TAG=""
+COMMIT=""
 
 # Help message
 show_help() {
@@ -15,7 +18,10 @@ Usage: $(basename "$0") [OPTIONS]
 Extract installed packages from a NixOS flake and format them into an Org-mode table.
 
 Options:
-  -f, --flake PATH          Path to the flake.nix file (default: current directory)
+  -f, --flake PATH          Path to the flake.nix file (can be local directory or temporary from git repository)
+  -r, --repo URL            Git repository URL containing the flake (clones to a temporary directory)
+  -b, --branch BRANCH/TAG   Branch or tag to check out in the git repository (default: main branch)
+  -c, --commit COMMIT_HASH  Specific commit to check out in the git repository
   -h, --hostname HOSTNAME   Hostname for nixosConfigurations (default: system hostname)
   -o, --output FILE         Output file path (default: temporary file)
   --stdout                  Print the Org table to stdout instead of saving to a file
@@ -23,8 +29,9 @@ Options:
 
 Examples:
   $(basename "$0") --flake /path/to/flake --hostname my-hostname
-  $(basename "$0") -f . -h my-hostname -o packages.org
+  $(basename "$0") -r https://github.com/user/repo.git -b main -h my-hostname -o packages.org
   $(basename "$0") --stdout
+  $(basename "$0") -r https://github.com/user/repo.git -c abcd123 -h my-hostname
 EOF
 }
 
@@ -33,6 +40,18 @@ while [[ $# -gt 0 ]]; do
     case $1 in
         -f|--flake)
             FLAKE_PATH="$2"
+            shift 2
+            ;;
+        -r|--repo)
+            REPO_URL="$2"
+            shift 2
+            ;;
+        -b|--branch)
+            BRANCH_OR_TAG="$2"
+            shift 2
+            ;;
+        -c|--commit)
+            COMMIT="$2"
             shift 2
             ;;
         -h|--hostname)
@@ -59,8 +78,37 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+# Clone the repository if a repo URL is provided
+if [[ -n "$REPO_URL" ]]; then
+    TEMP_DIR=$(mktemp -d)
+    echo "Cloning repository from $REPO_URL to $TEMP_DIR..."
+
+    if [[ -n "$BRANCH_OR_TAG" ]]; then
+        # Clone specific branch or tag
+        git clone --branch "$BRANCH_OR_TAG" --single-branch "$REPO_URL" "$TEMP_DIR" || { echo "Error: Failed to clone repository"; exit 1; }
+    else
+        # Shallow clone to save time and space
+        git clone --depth 1 "$REPO_URL" "$TEMP_DIR" || { echo "Error: Failed to clone repository"; exit 1; }
+    fi
+
+    # Check out a specific commit if provided
+    if [[ -n "$COMMIT" ]]; then
+        cd "$TEMP_DIR" || { echo "Error: Failed to change directory to $TEMP_DIR"; exit 1; }
+        git checkout "$COMMIT" || { echo "Error: Failed to checkout commit $COMMIT"; exit 1; }
+    fi
+
+    FLAKE_PATH="$TEMP_DIR"
+fi
+
+# Validate the flake path
+if [[ -z "$FLAKE_PATH" ]]; then
+    echo "Error: No flake path provided. Use -f or -r options to specify a flake."
+    show_help
+    exit 1
+fi
+
 # Ensure the flake is accessible
-if [ ! -f "$FLAKE_PATH/flake.nix" ]; then
+if [[ ! -f "$FLAKE_PATH/flake.nix" ]]; then
     echo "Error: flake.nix not found in $FLAKE_PATH"
     exit 1
 fi
@@ -119,4 +167,9 @@ else
 
     # Inform the user where the file is saved
     echo "Org table processed and saved at: $OUTPUT_FILE"
+fi
+
+# Cleanup
+if [[ -n "$REPO_URL" ]]; then
+    rm -rf "$TEMP_DIR"
 fi
