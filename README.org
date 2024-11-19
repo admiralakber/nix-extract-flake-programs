@@ -1,6 +1,6 @@
 #+title: nix-extract-flake-programs
 #+author: Aqeel Akber <aqeel@aqeelakber.com>
-#+lastmod: [2024-11-19 Tue 22:15]
+#+lastmod: [2024-11-19 Tue 22:26]
 
 * nix-extract-flake-programs 💅✨💻
 
@@ -13,7 +13,7 @@ Perfect for NixOS users who value clarity, organisation, and polished documentat
 * tl;dr 🌸
 - Extracts package lists from =nixosConfigurations= and Home Manager.
 - Works with any flake configuration, not just the installed one.
-- Outputs an Org-mode table for documentation or comparison.
+- Outputs a sorted Org-mode table for documentation or comparison.
 - Now runnable directly with Nix flakes!
 - Can even take a git repository as an input!
 
